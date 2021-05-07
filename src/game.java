@@ -23,9 +23,11 @@ public class game extends JFrame {
     JButton about;
     JButton exit;
     ButtonGroup group;
+    Font blackFont = new Font("黑体", Font.BOLD, 12);
 
-    // GUI绘图
+    // GUI绘图&&打开程序初始化&&添加监听器
     public game() {
+        // GUI绘制
         super("Game");// 设置标题
         setSize(890, 750);// 设置宽高
         setLocation(400, 50);// 设置位置
@@ -35,59 +37,47 @@ public class game extends JFrame {
         // 设置图标
         ImageIcon icon = new ImageIcon();
         setIconImage(icon.getImage());
-        Font f = new Font("黑体",Font.BOLD,12);
         // 导入棋盘对象
         cBoard = new cBoard();
-        Color bac = Color.decode("#a9a9a9");
-        cBoard.setBackground(bac);
-        // 初始化数组
-        int chessNum = cBoard.getcBoardSize();
-        gameArray = new int[chessNum][chessNum];
-        for (int[] x : gameArray) {
-            Arrays.fill(x, 0);
-        }
-        // 点击鼠标落子
-        cBoard.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                play(e);
-            }
-        });
+        Color background = Color.decode("#a9a9a9");
+        cBoard.setBackground(background);
         this.add(cBoard, BorderLayout.CENTER);
-        this.getContentPane().setBackground(bac);
+        this.getContentPane().setBackground(background);
         JPanel j = new JPanel();
         JPanel j1 = new JPanel(new GridLayout(5, 1, 10, 20));
-        // 设置棋局的相关选项
-
         JButton temp = new JButton("");
         temp.setVisible(false);
         JButton temp2 = new JButton("");
         temp2.setVisible(false);
         new_game = new JButton("开始游戏");
-        new_game.setFont(f);
+        new_game.setFont(blackFont);
         JPanel j2 = new JPanel();
         group = new ButtonGroup();
         perButton = new JRadioButton("人人对战");
-        perButton.setFont(f);
+        perButton.setFont(blackFont);
         comButton = new JRadioButton("人机对战");
+        comButton.setFont(blackFont);
         group.add(perButton);
         group.add(comButton);
         j2.add(perButton);
         j2.add(comButton);
         perButton.setSelected(true);
-
-        perButton.setFocusPainted(false);// 不绘制bai焦点
-        perButton.setBorderPainted(false); // 不绘制边du界
-        perButton.setContentAreaFilled(false); // 不填充所占zhi的矩形区域dao
-        comButton.setFocusPainted(false);// 不绘制bai焦点
-        comButton.setBorderPainted(false); // 不绘制边du界
-        comButton.setContentAreaFilled(false); // 不填充所占zhi的矩形区域dao
+        // 细节处理
+        perButton.setFocusPainted(false);
+        perButton.setBorderPainted(false);
+        perButton.setContentAreaFilled(false);
+        comButton.setFocusPainted(false);
+        comButton.setBorderPainted(false);
+        comButton.setContentAreaFilled(false);
 
         rule = new JButton("游戏说明");
         give_up = new JButton("认输");
         about = new JButton("关于");
         exit = new JButton("退出");
+        rule.setFont(blackFont);
+        give_up.setFont(blackFont);
+        about.setFont(blackFont);
+        exit.setFont(blackFont);
 
         JPanel j3 = new JPanel(new GridLayout(5, 1, 0, 30));
         JPanel j4 = new JPanel(new GridLayout(3, 1, 0, 30));
@@ -106,18 +96,36 @@ public class game extends JFrame {
         j1.add(temp2);
 
         j.add(j1);
-        j.setBackground(bac);
-        j1.setBackground(bac);
-        j2.setBackground(bac);
-        j3.setBackground(bac);
-        j4.setBackground(bac);
+        j.setBackground(background);
+        j1.setBackground(background);
+        j2.setBackground(background);
+        j3.setBackground(background);
+        j4.setBackground(background);
 
         this.add(j, BorderLayout.EAST);
         this.setVisible(true);// 设置可见
+        // GUI绘制完成
 
+        // 游戏功能开始
+        // 进入游戏第一次初始化
         type = -1;
         give_up.setEnabled(false);
-        // 开始游戏
+        
+        int chessNum = cBoard.getcBoardSize();
+        gameArray = new int[chessNum][chessNum];
+        for (int[] x : gameArray) {
+            Arrays.fill(x, 0);// 初始化game数组
+        }
+        // 设置按钮监听器
+        // 棋盘监听器
+        cBoard.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                play(e);
+            }
+        });
+        // 开始游戏按钮监听器
         new_game.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -129,7 +137,7 @@ public class game extends JFrame {
                 }
             }
         });
-        // 认输
+        // 认输按钮监听器
         give_up.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -164,6 +172,7 @@ public class game extends JFrame {
                 String tip2 = "输赢规则：当有任意一方棋子连成5个，该玩家即可获胜，游戏结束\n";
                 String tip3 = "提示1.人人对战:先执子为黑，后执子为白\n";
                 String tip4 = "提示2.人机对战：玩家执黑，电脑执白";
+
                 JOptionPane.showMessageDialog(null, tip1 + tip2 + tip3 + tip4, "游戏说明", JOptionPane.PLAIN_MESSAGE);
             }
         });
@@ -197,7 +206,7 @@ public class game extends JFrame {
                     if (type == 0) { // 人人对战
                         person = person == 1 ? 2 : 1;
                     } else if (type == 1) { // 人机对战
-                        ITnext();
+                        ITnext();//?
                     }
                 } else {
                     // 有一方赢了

@@ -52,59 +52,57 @@
 ```
 
 ```java
-import javax.swing.*;
-import java.awt.*;
-
-public class gui extends JFrame {
-    JRadioButton perButton;
-    JRadioButton comButton;
-    JButton new_game; // 开始游戏
-    JButton give_up;
-    JButton rule;
-    JButton about;
-    JButton exit;
-    ButtonGroup group;
-    Color background = Color.decode("#a9a9a9");
-
-    gui() {
+        // GUI绘制
         super("Game");// 设置标题
         setSize(890, 750);// 设置宽高
         setLocation(400, 50);// 设置位置
         this.setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// 设置默认关闭
         this.setLayout(new BorderLayout());
-        ImageIcon icon = new ImageIcon("./cat.png");
+        // 设置图标
+        ImageIcon icon = new ImageIcon();
         setIconImage(icon.getImage());
+        // 导入棋盘对象
+        cBoard = new cBoard();
+        Color bac = Color.decode("#a9a9a9");
+        cBoard.setBackground(bac);
+        this.add(cBoard, BorderLayout.CENTER);
+        this.getContentPane().setBackground(bac);
         JPanel j = new JPanel();
         JPanel j1 = new JPanel(new GridLayout(5, 1, 10, 20));
-        // 设置棋局的相关选项
-
         JButton temp = new JButton("");
         temp.setVisible(false);
         JButton temp2 = new JButton("");
         temp2.setVisible(false);
         new_game = new JButton("开始游戏");
+        new_game.setFont(blackFont);
         JPanel j2 = new JPanel();
         group = new ButtonGroup();
         perButton = new JRadioButton("人人对战");
+        perButton.setFont(blackFont);
         comButton = new JRadioButton("人机对战");
+        comButton.setFont(blackFont);
         group.add(perButton);
         group.add(comButton);
         j2.add(perButton);
         j2.add(comButton);
         perButton.setSelected(true);
-		//处理按钮边界
+        //细节处理
         perButton.setFocusPainted(false);
-        perButton.setBorderPainted(false); 
+        perButton.setBorderPainted(false);
         perButton.setContentAreaFilled(false);
         comButton.setFocusPainted(false);
-        comButton.setBorderPainted(false); 
-        comButton.setContentAreaFilled(false);
+        comButton.setBorderPainted(false);
+        comButton.setContentAreaFilled(false); 
 
         rule = new JButton("游戏说明");
         give_up = new JButton("认输");
         about = new JButton("关于");
         exit = new JButton("退出");
+        rule.setFont(blackFont);
+        give_up.setFont(blackFont);
+        about.setFont(blackFont);
+        exit.setFont(blackFont);
 
         JPanel j3 = new JPanel(new GridLayout(5, 1, 0, 30));
         JPanel j4 = new JPanel(new GridLayout(3, 1, 0, 30));
@@ -123,20 +121,13 @@ public class gui extends JFrame {
         j1.add(temp2);
 
         j.add(j1);
-        j.setBackground(background);
-        j1.setBackground(background);
-        j2.setBackground(background);
-        j3.setBackground(background);
-        j4.setBackground(background);
+        j.setBackground(bac);
+        j1.setBackground(bac);
+        j2.setBackground(bac);
+        j3.setBackground(bac);
+        j4.setBackground(bac);
 
         this.add(j, BorderLayout.EAST);
-        this.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new gui();
-    }
-}
-
+        this.setVisible(true);// 设置可见
 ```
 

@@ -4,7 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 
-public class gui extends JFrame {
+public class test extends JFrame {
     JRadioButton perButton;
     JRadioButton comButton;
     JButton new_game; // 开始游戏
@@ -15,7 +15,7 @@ public class gui extends JFrame {
     ButtonGroup group;
     Color background = Color.decode("#a9a9a9");
 
-    gui() {
+    test() {
         super("Game");// 设置标题
         setSize(890, 750);// 设置宽高
         setLocation(400, 50);// 设置位置
@@ -83,6 +83,6 @@ public class gui extends JFrame {
     }
 
     public static void main(String[] args) {
-        new gui();
+        new test();
     }
 }
