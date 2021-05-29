@@ -110,7 +110,7 @@ public class game extends JFrame {
         // 进入游戏第一次初始化
         type = -1;
         give_up.setEnabled(false);
-        
+
         int chessNum = cBoard.getcBoardSize();
         gameArray = new int[chessNum][chessNum];
         for (int[] x : gameArray) {
@@ -206,7 +206,7 @@ public class game extends JFrame {
                     if (type == 0) { // 人人对战
                         person = person == 1 ? 2 : 1;
                     } else if (type == 1) { // 人机对战
-                        ITnext();//?
+                        ITnext();// ?
                     }
                 } else {
                     // 有一方赢了
@@ -322,22 +322,22 @@ public class game extends JFrame {
         for (int i = 0; i < gameArr2.length; i++) {
             gameArr2[i] = gameArray[i].clone();
         }
-        int[] xx = { -2, -1, 0, 1, 2 };
+        int[] dx = { -2, -1, 0, 1, 2 };
 
         for (int i = 0; i < 19; i++) {
             for (int j = 0; j < 19; j++) {
-                if (gameArray[i][j] != 0) {
+                if (gameArray[i][j] != 0) {/* 找到一个下过子的点，+-2的范围内找点 */
 
-                    for (int a = 0; a < xx.length; a++) {
-                        for (int b = 0; b < xx.length; b++) {
-                            if (ifBorder(i + xx[a], j + xx[b]))
+                    for (int a = 0; a < dx.length; a++) {
+                        for (int b = 0; b < dx.length; b++) {
+                            if (ifBorder(i + dx[a], j + dx[b]))
                                 continue;
-                            if (gameArr2[i + xx[a]][j + xx[b]] == 0) {
-                                gameArr2[i + xx[a]][j + xx[b]] = fun(i + xx[a], j + xx[b]);
-                                if (gameArr2[i + xx[a]][j + xx[b]] > max) {
-                                    max = gameArr2[i + xx[a]][j + xx[b]];
-                                    nextX = i + xx[a];
-                                    nextY = j + xx[b];
+                            if (gameArr2[i + dx[a]][j + dx[b]] == 0) {/* 这个点还没被处理过 */
+                                gameArr2[i + dx[a]][j + dx[b]] = fun(i + dx[a], j + dx[b]);
+                                if (gameArr2[i + dx[a]][j + dx[b]] > max) {/* 找最优解 */
+                                    max = gameArr2[i + dx[a]][j + dx[b]];
+                                    nextX = i + dx[a];
+                                    nextY = j + dx[b];
                                 }
                             }
                         }
@@ -375,7 +375,7 @@ public class game extends JFrame {
 
     // 获取当前落子得分
     public int getScore(int x, int y, int type) {
-        gameArray[x][y] = type;
+        gameArray[x][y] = type;/** 假设先下这一步，1是人，2是机器 */
         // 横
         String s1 = getString(gameArray[x]);
         int a1 = getScoreType(s1, y, type);
